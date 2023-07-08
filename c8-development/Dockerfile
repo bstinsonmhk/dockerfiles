@@ -1,14 +1,13 @@
-FROM fedora:28
+FROM quay.io/centos/centos:stream8
 
 MAINTAINER Brian Stinson <brian@bstinson.com>
 
 RUN dnf -y update
 
-RUN dnf -y install python bpython python-setuptools python-pip sudo git hub mercurial neovim python3-neovim wget mock zsh findutils ctags-etags pytest
 RUN dnf clean all
+RUN dnf -y --setopt=tsflags=nodocs install python3 python3-setuptools python3-pip sudo dnf-utils git vim-enhanced wget zsh
 
 RUN useradd -m bstinson 
-RUN usermod -a -G mock bstinson
 RUN echo 'bstinson ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/bstinson && chmod 600 /etc/sudoers.d/bstinson
 RUN mkdir -p /home/bstinson/src && chown bstinson.bstinson /home/bstinson/src
 
